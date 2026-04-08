@@ -21,18 +21,20 @@ const DSAProgressPanel = ({
   onDSATotalDaysChange
 }) => {
   const [showDaysInput, setShowDaysInput] = useState(false);
+  const [showStartDateInput, setShowStartDateInput] = useState(false);
   const [inputDays, setInputDays] = useState('');
+  const [startDate, setStartDate] = useState('');
 
   // Generate DSA schedule when started
   useEffect(() => {
-    if (dsaStarted && dsaTotalDays && Object.keys(dsaProgress).length === 0) {
-      generateDSASchedule(dsaTotalDays);
+    if (dsaStarted && dsaTotalDays && startDate && Object.keys(dsaProgress).length === 0) {
+      generateDSASchedule(dsaTotalDays, new Date(startDate));
     }
-  }, [dsaStarted, dsaTotalDays]);
+  }, [dsaStarted, dsaTotalDays, startDate]);
 
-  const generateDSASchedule = (totalDays) => {
+  const generateDSASchedule = (totalDays, startingDate) => {
     const schedule = {};
-    let currentDay = new Date();
+    let currentDay = new Date(startingDate);
     
     // Calculate days per topic based on total days
     const minTotalDays = dsaRoadmap.reduce((sum, topic) => sum + topic.minDays, 0);
@@ -81,9 +83,28 @@ const DSAProgressPanel = ({
     const days = parseInt(inputDays);
     if (days && days >= 10 && days <= 100) {
       onDSATotalDaysChange(days);
-      onDSAStart(true);
       setShowDaysInput(false);
+      setShowStartDateInput(true);
+    }
+  };
+
+  const handleStartDateSubmit = () => {
+    if (startDate) {
+      onDSAStart(true);
+      setShowStartDateInput(false);
       setInputDays('');
+    }
+  };
+
+  const handleResetDSA = () => {
+    if (window.confirm('Are you sure you want to reset your DSA progress? This will delete all progress data.')) {
+      onDSAProgressChange({});
+      onDSAStart(false);
+      onDSATotalDaysChange(null);
+      setStartDate('');
+      setInputDays('');
+      setShowDaysInput(false);
+      setShowStartDateInput(false);
     }
   };
 
@@ -137,10 +158,10 @@ const DSAProgressPanel = ({
       <div className="dsa-panel">
         <h3 className="dsa-title">🚀 DSA Progress Tracker</h3>
         
-        {!showDaysInput ? (
+        {!showDaysInput && !showStartDateInput ? (
           <div className="dsa-intro">
             <p className="dsa-description">
-              Start your Data Structures & Algorithms journey! We'll create a personalized roadmap based on your timeline.
+              Start your Data Structures & Algorithms journey! We'll create a personalized roadmap based on your timeline and start date.
             </p>
             <div className="roadmap-preview">
               <h4>Topics Covered:</h4>
@@ -157,7 +178,7 @@ const DSAProgressPanel = ({
               Start DSA Journey
             </button>
           </div>
-        ) : (
+        ) : showDaysInput ? (
           <div className="days-input-section">
             <h4 className="input-title">How many days do you want to complete DSA?</h4>
             <p className="input-description">
@@ -178,12 +199,44 @@ const DSAProgressPanel = ({
                 onClick={handleDaysSubmit}
                 disabled={!inputDays || inputDays < 10 || inputDays > 100}
               >
-                Create Schedule
+                Next
               </button>
             </div>
             <button 
               className="back-button"
               onClick={() => setShowDaysInput(false)}
+            >
+              Back
+            </button>
+          </div>
+        ) : (
+          <div className="start-date-section">
+            <h4 className="input-title">When do you want to start?</h4>
+            <p className="input-description">
+              Choose your start date. The DSA topics will be scheduled from this date for {inputDays} days.
+            </p>
+            <div className="start-date-container">
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="date-input-large"
+                min={new Date().toISOString().split('T')[0]}
+              />
+              <button 
+                className="confirm-button"
+                onClick={handleStartDateSubmit}
+                disabled={!startDate}
+              >
+                Create Schedule
+              </button>
+            </div>
+            <button 
+              className="back-button"
+              onClick={() => {
+                setShowStartDateInput(false);
+                setShowDaysInput(true);
+              }}
             >
               Back
             </button>
@@ -200,7 +253,12 @@ const DSAProgressPanel = ({
 
   return (
     <div className="dsa-panel">
-      <h3 className="dsa-title">🚀 DSA Progress Tracker</h3>
+      <div className="dsa-header">
+        <h3 className="dsa-title">🚀 DSA Progress Tracker</h3>
+        <button className="reset-dsa-button" onClick={handleResetDSA}>
+          🔄 Reset
+        </button>
+      </div>
       
       <div className="progress-overview">
         <div className="total-progress">

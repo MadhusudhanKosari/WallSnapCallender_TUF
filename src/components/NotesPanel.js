@@ -13,6 +13,7 @@ const NotesPanel = ({
   const [noteType, setNoteType] = useState('month');
   const [startDateInput, setStartDateInput] = useState('');
   const [endDateInput, setEndDateInput] = useState('');
+  const [showMonthNotes, setShowMonthNotes] = useState(true);
 
   // Update date inputs when selection changes
   useEffect(() => {
@@ -68,6 +69,21 @@ const NotesPanel = ({
     onNotesChange(newNotes);
   };
 
+  const handleResetNote = () => {
+    const key = getNoteKey();
+    const newNotes = { ...notes };
+    delete newNotes[key];
+    onNotesChange(newNotes);
+    setNoteText('');
+  };
+
+  const handleResetAllNotes = () => {
+    if (window.confirm('Are you sure you want to delete all notes? This action cannot be undone.')) {
+      onNotesChange({});
+      setNoteText('');
+    }
+  };
+
   const handleDateInputChange = (type, value) => {
     if (type === 'start') {
       setStartDateInput(value);
@@ -100,9 +116,9 @@ const NotesPanel = ({
   const getRelevantNotes = () => {
     const relevantNotes = [];
     
-    // Always show month notes
+    // Always show month notes if toggle is on
     const monthKey = `month-${currentDate.getFullYear()}-${currentDate.getMonth()}`;
-    if (notes[monthKey]) {
+    if (notes[monthKey] && showMonthNotes) {
       relevantNotes.push({
         type: 'Month',
         content: notes[monthKey],
@@ -141,7 +157,12 @@ const NotesPanel = ({
 
   return (
     <div className="notes-panel">
-      <h3 className="notes-title">📝 Notes</h3>
+      <div className="notes-header">
+        <h3 className="notes-title">📝 Notes</h3>
+        <button className="reset-all-button" onClick={handleResetAllNotes}>
+          🗑️ Reset All
+        </button>
+      </div>
       
       {/* Date Range Editor */}
       <div className="date-editor">
@@ -238,21 +259,45 @@ const NotesPanel = ({
         }
       />
 
-      <button
-        className="save-button"
-        onClick={handleSaveNote}
-        disabled={
-          (noteType === 'date' && !selectedStartDate) ||
-          (noteType === 'range' && (!selectedStartDate || !selectedEndDate))
-        }
-      >
-        Save Note
-      </button>
+      <div className="note-actions">
+        <button
+          className="save-button"
+          onClick={handleSaveNote}
+          disabled={
+            (noteType === 'date' && !selectedStartDate) ||
+            (noteType === 'range' && (!selectedStartDate || !selectedEndDate))
+          }
+        >
+          Save Note
+        </button>
+        
+        {((noteType === 'month') || 
+          (noteType === 'date' && selectedStartDate) || 
+          (noteType === 'range' && selectedStartDate && selectedEndDate)) && 
+          notes[getNoteKey()] && (
+          <button
+            className="reset-button"
+            onClick={handleResetNote}
+          >
+            🗑️ Delete
+          </button>
+        )}
+      </div>
 
       {/* Relevant Notes Display */}
       {relevantNotes.length > 0 && (
         <div className="relevant-notes">
-          <h4 className="relevant-notes-title">Current Notes</h4>
+          <div className="relevant-notes-header">
+            <h4 className="relevant-notes-title">Current Notes</h4>
+            {notes[`month-${currentDate.getFullYear()}-${currentDate.getMonth()}`] && (
+              <button 
+                className="toggle-month-notes"
+                onClick={() => setShowMonthNotes(!showMonthNotes)}
+              >
+                {showMonthNotes ? '👁️ Hide Month' : '👁️ Show Month'}
+              </button>
+            )}
+          </div>
           <div className="notes-list">
             {relevantNotes.map((note) => (
               <div key={note.key} className={`note-item ${note.type.toLowerCase()}`}>

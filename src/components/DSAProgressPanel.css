@@ -10,7 +10,56 @@
   font-size: 1.25rem;
   font-weight: 600;
   color: #1e293b;
-  margin: 0 0 1.5rem 0;
+  margin: 0;
+}
+.dsa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.reset-dsa-button {
+  padding: 0.5rem 1rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-dsa-button:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+/* Start Date Input Section */
+.start-date-section {
+  text-align: center;
+}
+
+.start-date-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.date-input-large {
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+  transition: border-color 0.2s ease;
+}
+
+.date-input-large:focus {
+  outline: none;
+  border-color: #10b981;
 }
 
 /* Initial Setup */
