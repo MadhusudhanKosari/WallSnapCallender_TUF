@@ -35,6 +35,7 @@ const DateCell = ({
   currentDate
 }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showNotesPopup, setShowNotesPopup] = useState(false);
 
   if (!date) {
     return <div className="date-cell empty"></div>;
@@ -57,7 +58,7 @@ const DateCell = ({
     const specificDateKey = `date-${date.getTime()}`;
     if (notes[specificDateKey]) {
       dateNotes.push({
-        type: 'date',
+        type: 'Date',
         content: notes[specificDateKey]
       });
     }
@@ -71,7 +72,7 @@ const DateCell = ({
         
         if (date >= startDate && date <= endDate) {
           dateNotes.push({
-            type: 'range',
+            type: 'Range',
             content: note
           });
         }
@@ -82,7 +83,7 @@ const DateCell = ({
     const monthKey = `month-${date.getFullYear()}-${date.getMonth()}`;
     if (notes[monthKey]) {
       dateNotes.push({
-        type: 'month',
+        type: 'Month',
         content: notes[monthKey]
       });
     }
@@ -106,6 +107,11 @@ const DateCell = ({
     }
     onColorDate(newColoredDates);
     setShowColorPicker(false);
+  };
+
+  const handleNotesClick = (e) => {
+    e.stopPropagation();
+    setShowNotesPopup(!showNotesPopup);
   };
 
   let cellClass = 'date-cell';
@@ -141,28 +147,6 @@ const DateCell = ({
         )}
       </div>
       
-      {/* Display Notes - Limited and Compact */}
-      {dateNotes.length > 0 && (
-        <div className="date-notes">
-          {dateNotes.slice(0, 1).map((note, index) => (
-            <div 
-              key={index} 
-              className={`note-dot ${note.type}`}
-              title={`${note.type}: ${note.content}`}
-            >
-              {note.type === 'date' && '•'}
-              {note.type === 'range' && '•'}
-              {note.type === 'month' && '•'}
-            </div>
-          ))}
-          {dateNotes.length > 1 && (
-            <div className="note-count" title={`${dateNotes.length} notes total`}>
-              +{dateNotes.length - 1}
-            </div>
-          )}
-        </div>
-      )}
-      
       {dsaTask && (
         <div className="dsa-task">
           {dsaTask}
@@ -172,6 +156,38 @@ const DateCell = ({
       {isHoliday && (
         <div className="holiday-indicator" title={isHoliday}>
           🎉
+        </div>
+      )}
+
+      {/* Notes Display */}
+      {dateNotes.length > 0 && (
+        <div className="notes-section">
+          <div className="note-preview" onClick={handleNotesClick}>
+            {dateNotes[0].content.length > 12 ? `${dateNotes[0].content.substring(0, 12)}...` : dateNotes[0].content}
+          </div>
+          {dateNotes.length > 1 && (
+            <div className="more-notes" onClick={handleNotesClick}>
+              +{dateNotes.length - 1} more
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Notes Popup */}
+      {showNotesPopup && dateNotes.length > 0 && (
+        <div className="notes-popup">
+          <div className="notes-popup-header">
+            <span>Notes for {date.getDate()}</span>
+            <button onClick={() => setShowNotesPopup(false)}>×</button>
+          </div>
+          <div className="notes-popup-content">
+            {dateNotes.map((note, index) => (
+              <div key={index} className={`popup-note ${note.type.toLowerCase()}`}>
+                <div className="note-type">{note.type}</div>
+                <div className="note-content">{note.content}</div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
       

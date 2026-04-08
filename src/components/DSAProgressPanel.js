@@ -161,7 +161,7 @@ const DSAProgressPanel = ({
         {!showDaysInput && !showStartDateInput ? (
           <div className="dsa-intro">
             <p className="dsa-description">
-              Start your Data Structures & Algorithms journey! We'll create a personalized roadmap based on your timeline and start date.
+              Start your DSA journey! Choose your timeline and we'll create a personalized roadmap.
             </p>
             <div className="roadmap-preview">
               <h4>Topics Covered:</h4>
