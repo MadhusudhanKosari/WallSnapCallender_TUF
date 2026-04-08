@@ -10,7 +10,8 @@ const CalendarGrid = ({
   coloredDates,
   onColorDate,
   dsaProgress,
-  dsaStarted
+  dsaStarted,
+  notes
 }) => {
   const today = new Date();
   const year = currentDate.getFullYear();
@@ -71,6 +72,8 @@ const CalendarGrid = ({
             dsaStarted={dsaStarted}
             selectedStartDate={selectedStartDate}
             selectedEndDate={selectedEndDate}
+            notes={notes}
+            currentDate={currentDate}
           />
         ))}
       </div>

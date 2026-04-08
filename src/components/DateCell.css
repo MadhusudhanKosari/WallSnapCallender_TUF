@@ -1,7 +1,56 @@
+/* Date Notes Display */
+.date-notes {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  max-height: 40px;
+  overflow: hidden;
+}
+
+.note-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6rem;
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+  line-height: 1;
+  max-width: 100%;
+}
+
+.note-indicator.date {
+  background: rgba(59, 130, 246, 0.1);
+  color: #1e40af;
+  border-left: 2px solid #3b82f6;
+}
+
+.note-indicator.range {
+  background: rgba(16, 185, 129, 0.1);
+  color: #047857;
+  border-left: 2px solid #10b981;
+}
+
+.note-indicator.month {
+  background: rgba(245, 158, 11, 0.1);
+  color: #92400e;
+  border-left: 2px solid #f59e0b;
+}
+
+.note-preview {
+  font-size: 0.55rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Adjust date cell height for notes */
 .date-cell {
   position: relative;
   background: white;
-  min-height: 80px;
+  min-height: 100px;
   padding: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -173,7 +222,7 @@
 
 @media (max-width: 768px) {
   .date-cell {
-    min-height: 60px;
+    min-height: 80px;
     padding: 0.25rem;
   }
   
@@ -183,5 +232,18 @@
   
   .dsa-task {
     font-size: 0.625rem;
+  }
+  
+  .date-notes {
+    max-height: 30px;
+  }
+  
+  .note-indicator {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.2rem;
+  }
+  
+  .note-preview {
+    font-size: 0.45rem;
   }
 }

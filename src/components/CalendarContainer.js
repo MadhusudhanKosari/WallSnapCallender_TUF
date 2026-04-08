@@ -113,6 +113,7 @@ const CalendarContainer = () => {
           dsaProgress={dsaProgress}
           dsaStarted={dsaStarted}
           isFlipping={isFlipping}
+          notes={notes}
         />
       </div>
       

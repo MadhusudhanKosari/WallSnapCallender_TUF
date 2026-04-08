@@ -32,7 +32,8 @@ const WallCalendar = ({
   onColorDate,
   dsaProgress,
   dsaStarted,
-  isFlipping
+  isFlipping,
+  notes
 }) => {
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
@@ -103,6 +104,7 @@ const WallCalendar = ({
             onColorDate={onColorDate}
             dsaProgress={dsaProgress}
             dsaStarted={dsaStarted}
+            notes={notes}
           />
         </div>
       </div>

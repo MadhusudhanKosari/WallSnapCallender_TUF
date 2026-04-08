@@ -30,7 +30,9 @@ const DateCell = ({
   dsaProgress,
   dsaStarted,
   selectedStartDate,
-  selectedEndDate
+  selectedEndDate,
+  notes,
+  currentDate
 }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -46,6 +48,49 @@ const DateCell = ({
   const customColor = coloredDates[dateKey];
   const isDSACompleted = dsaProgress[dateKey]?.completed;
   const dsaTask = dsaProgress[dateKey]?.task;
+
+  // Get notes for this date
+  const getNotesForDate = () => {
+    const dateNotes = [];
+    
+    // Check for specific date notes
+    const specificDateKey = `date-${date.getTime()}`;
+    if (notes[specificDateKey]) {
+      dateNotes.push({
+        type: 'date',
+        content: notes[specificDateKey]
+      });
+    }
+    
+    // Check for range notes that include this date
+    Object.entries(notes).forEach(([key, note]) => {
+      if (key.startsWith('range-')) {
+        const [, startTime, endTime] = key.split('-');
+        const startDate = new Date(parseInt(startTime));
+        const endDate = new Date(parseInt(endTime));
+        
+        if (date >= startDate && date <= endDate) {
+          dateNotes.push({
+            type: 'range',
+            content: note
+          });
+        }
+      }
+    });
+    
+    // Check for month notes
+    const monthKey = `month-${date.getFullYear()}-${date.getMonth()}`;
+    if (notes[monthKey]) {
+      dateNotes.push({
+        type: 'month',
+        content: notes[monthKey]
+      });
+    }
+    
+    return dateNotes;
+  };
+
+  const dateNotes = getNotesForDate();
 
   const handleRightClick = (e) => {
     e.preventDefault();
@@ -95,6 +140,26 @@ const DateCell = ({
           <span className="date-symbol end">🏁</span>
         )}
       </div>
+      
+      {/* Display Notes */}
+      {dateNotes.length > 0 && (
+        <div className="date-notes">
+          {dateNotes.map((note, index) => (
+            <div 
+              key={index} 
+              className={`note-indicator ${note.type}`}
+              title={note.content.length > 20 ? note.content : undefined}
+            >
+              {note.type === 'date' && '📝'}
+              {note.type === 'range' && '📋'}
+              {note.type === 'month' && '📅'}
+              <span className="note-preview">
+                {note.content.length > 15 ? `${note.content.substring(0, 15)}...` : note.content}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
       
       {dsaTask && (
         <div className="dsa-task">
