@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './DateCell.css';
 
 // Static holidays (you can expand this)
@@ -36,6 +36,24 @@ const DateCell = ({
 }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showNotesPopup, setShowNotesPopup] = useState(false);
+  const popupRef = useRef(null);
+
+  // Close popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setShowNotesPopup(false);
+      }
+    };
+
+    if (showNotesPopup) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showNotesPopup]);
 
   if (!date) {
     return <div className="date-cell empty"></div>;
@@ -111,7 +129,12 @@ const DateCell = ({
 
   const handleNotesClick = (e) => {
     e.stopPropagation();
-    setShowNotesPopup(!showNotesPopup);
+    setShowNotesPopup(prev => !prev);
+  };
+
+  const handleClosePopup = (e) => {
+    e.stopPropagation();
+    setShowNotesPopup(false);
   };
 
   let cellClass = 'date-cell';
@@ -175,10 +198,10 @@ const DateCell = ({
 
       {/* Notes Popup */}
       {showNotesPopup && dateNotes.length > 0 && (
-        <div className="notes-popup">
+        <div className="notes-popup" ref={popupRef}>
           <div className="notes-popup-header">
             <span>Notes for {date.getDate()}</span>
-            <button onClick={() => setShowNotesPopup(false)}>×</button>
+            <button onClick={handleClosePopup}>×</button>
           </div>
           <div className="notes-popup-content">
             {dateNotes.map((note, index) => (
