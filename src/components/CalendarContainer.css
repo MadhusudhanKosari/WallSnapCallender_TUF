@@ -1,0 +1,45 @@
+.calendar-app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 3rem;
+}
+
+.wall-calendar-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 350px;
+}
+
+@media (max-width: 1200px) {
+  .calendar-app {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .sidebar {
+    width: 100%;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-app {
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+  
+  .sidebar {
+    max-width: none;
+  }
+}

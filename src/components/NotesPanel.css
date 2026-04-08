@@ -1,0 +1,251 @@
+.notes-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.notes-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Date Editor */
+.date-editor {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.editor-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 1rem 0;
+}
+
+.date-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.date-input-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.date-input {
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Note Type Selector */
+.note-type-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.type-button {
+  padding: 0.75rem 0.5rem;
+  border: 2px solid #e2e8f0;
+  background: white;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.type-button:hover:not(:disabled) {
+  border-color: #667eea;
+  background: #f8fafc;
+}
+
+.type-button.active {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.type-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f1f5f9;
+}
+
+/* Note Context */
+.note-context {
+  margin-bottom: 1rem;
+}
+
+.context-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: #f0f9ff;
+  border-radius: 8px;
+  border-left: 4px solid #0ea5e9;
+}
+
+.context-label {
+  font-weight: 500;
+  color: #0c4a6e;
+  font-size: 0.875rem;
+}
+
+.context-value {
+  font-weight: 600;
+  color: #0c4a6e;
+  font-size: 0.875rem;
+}
+
+/* Note Textarea */
+.note-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.note-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.note-textarea:disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+}
+
+/* Save Button */
+.save-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+}
+
+.save-button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Relevant Notes */
+.relevant-notes {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.relevant-notes-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 1rem 0;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.note-item {
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid;
+  position: relative;
+}
+
+.note-item.month {
+  background: #fef3c7;
+  border-left-color: #f59e0b;
+}
+
+.note-item.date {
+  background: #dbeafe;
+  border-left-color: #3b82f6;
+}
+
+.note-item.range {
+  background: #dcfce7;
+  border-left-color: #10b981;
+}
+
+.note-type-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.note-preview {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #374151;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .notes-panel {
+    padding: 1rem;
+  }
+  
+  .date-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .note-type-selector {
+    grid-template-columns: 1fr;
+  }
+  
+  .note-textarea {
+    min-height: 100px;
+  }
+}

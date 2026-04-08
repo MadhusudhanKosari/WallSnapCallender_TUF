@@ -1,0 +1,187 @@
+.date-cell {
+  position: relative;
+  background: white;
+  min-height: 80px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.date-cell:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.date-cell.empty {
+  background: #f8fafc;
+  cursor: default;
+}
+
+.date-cell.empty:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.date-number {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+  position: relative;
+}
+
+.date-cell.today {
+  background: #dbeafe;
+  border: 2px solid #3b82f6;
+}
+
+.date-cell.today .date-number {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.date-cell.selected.start-date {
+  background: #10b981;
+  color: white;
+  border: 3px solid #059669;
+}
+
+.date-cell.selected.start-date .date-number {
+  color: white;
+  font-weight: 800;
+}
+
+.date-cell.selected.end-date {
+  background: #f59e0b;
+  color: white;
+  border: 3px solid #d97706;
+}
+
+.date-cell.selected.end-date .date-number {
+  color: white;
+  font-weight: 800;
+}
+
+.date-symbol {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.7rem;
+}
+
+.date-symbol.start {
+  color: white;
+}
+
+.date-symbol.end {
+  color: white;
+}
+
+.date-cell.in-range {
+  background: #e0e7ff;
+}
+
+.date-cell.sunday {
+  background: #fef2f2;
+}
+
+.date-cell.sunday .date-number {
+  color: #dc2626;
+}
+
+.date-cell.holiday {
+  background: #fff7ed;
+}
+
+.date-cell.holiday .date-number {
+  color: #ea580c;
+}
+
+.date-cell.dsa-completed {
+  background: #dcfce7 !important;
+  border: 2px solid #16a34a;
+}
+
+.date-cell.dsa-completed .date-number {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.dsa-task {
+  font-size: 0.75rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.125rem 0.25rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.holiday-indicator {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.color-picker {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+}
+
+.color-options {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.color-option {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e2e8f0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.color-option:hover {
+  transform: scale(1.1);
+}
+
+.color-option.remove {
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .date-cell {
+    min-height: 60px;
+    padding: 0.25rem;
+  }
+  
+  .date-number {
+    font-size: 0.875rem;
+  }
+  
+  .dsa-task {
+    font-size: 0.625rem;
+  }
+}

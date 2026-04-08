@@ -1,0 +1,221 @@
+.wall-calendar {
+  position: relative;
+  width: 600px;
+  max-width: 90vw;
+  transform-style: preserve-3d;
+}
+
+/* Spiral Binding */
+.spiral-binding {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 80px;
+  z-index: 10;
+}
+
+.spiral-ring {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #666;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #888, #aaa);
+  box-shadow: 
+    inset 0 2px 4px rgba(0,0,0,0.3),
+    0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* Calendar Paper */
+.calendar-paper {
+  background: white;
+  border-radius: 8px 8px 4px 4px;
+  box-shadow: 
+    0 20px 40px rgba(0,0,0,0.15),
+    0 8px 16px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  overflow: hidden;
+  transform-origin: top center;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  position: relative;
+}
+
+.calendar-paper.flipping {
+  animation: flipCalendar 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes flipCalendar {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+/* Navigation */
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.nav-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: white;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #475569;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.month-year-display {
+  text-align: center;
+}
+
+.year-small {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 2px;
+}
+
+/* Hero Image Section */
+.hero-image-section {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.month-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  padding: 2rem;
+  display: flex;
+  align-items: flex-end;
+}
+
+.month-title {
+  color: white;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  letter-spacing: 3px;
+}
+
+/* Notes Lines */
+.notes-lines {
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.note-line {
+  height: 1px;
+  background: #cbd5e1;
+  margin: 8px 0;
+  opacity: 0.6;
+}
+
+/* Calendar Section */
+.calendar-section {
+  background: white;
+  padding: 1rem;
+}
+
+/* Calendar Shadow */
+.calendar-shadow {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: -10px;
+  bottom: -10px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wall-calendar {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .spiral-binding {
+    gap: 60px;
+  }
+  
+  .spiral-ring {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
+  }
+  
+  .calendar-nav {
+    padding: 0.75rem 1rem;
+  }
+  
+  .nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+  
+  .hero-image-section {
+    height: 200px;
+  }
+  
+  .month-title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+  
+  .month-overlay {
+    padding: 1rem;
+  }
+  
+  .notes-lines {
+    padding: 0.75rem 1rem;
+  }
+  
+  .calendar-section {
+    padding: 0.75rem;
+  }
+}
