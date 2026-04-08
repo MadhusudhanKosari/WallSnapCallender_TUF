@@ -141,23 +141,25 @@ const DateCell = ({
         )}
       </div>
       
-      {/* Display Notes */}
+      {/* Display Notes - Limited and Compact */}
       {dateNotes.length > 0 && (
         <div className="date-notes">
-          {dateNotes.map((note, index) => (
+          {dateNotes.slice(0, 1).map((note, index) => (
             <div 
               key={index} 
-              className={`note-indicator ${note.type}`}
-              title={note.content.length > 20 ? note.content : undefined}
+              className={`note-dot ${note.type}`}
+              title={`${note.type}: ${note.content}`}
             >
-              {note.type === 'date' && '📝'}
-              {note.type === 'range' && '📋'}
-              {note.type === 'month' && '📅'}
-              <span className="note-preview">
-                {note.content.length > 15 ? `${note.content.substring(0, 15)}...` : note.content}
-              </span>
+              {note.type === 'date' && '•'}
+              {note.type === 'range' && '•'}
+              {note.type === 'month' && '•'}
             </div>
           ))}
+          {dateNotes.length > 1 && (
+            <div className="note-count" title={`${dateNotes.length} notes total`}>
+              +{dateNotes.length - 1}
+            </div>
+          )}
         </div>
       )}
       
